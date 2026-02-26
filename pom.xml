@@ -59,6 +59,16 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.mobilitydata</groupId>
+            <artifactId>gtfs-realtime-bindings</artifactId>
+            <version>0.0.8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.25.5</version>
+        </dependency>
     </dependencies>
 
     <build>
