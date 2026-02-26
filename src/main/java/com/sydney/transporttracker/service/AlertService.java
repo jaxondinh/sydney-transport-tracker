@@ -20,8 +20,7 @@ public class AlertService {
         return true;
     }
     public List<Alert> getAllAlerts() {
-        List<Alert> alertList = alertRepository.findAll();
-        return alertList;
+        return alertRepository.findAll();
     }
     public Optional<Alert> getAlertByID(Long alertID) {
         return alertRepository.findById(alertID);
