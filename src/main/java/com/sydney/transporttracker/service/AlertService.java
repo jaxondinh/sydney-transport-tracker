@@ -6,25 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlertService {
     @Autowired
     private AlertRepository alertRepository;
     public Alert createAlert(Alert alert) {
-        alertRepository.save(alert);
-        return alert;
+        return alertRepository.save(alert);
     }
-    public boolean deleteAlert(Alert alert) {
-        alertRepository.deleteById(alert.id);
+    public boolean deleteAlert(Long alertID) {
+        alertRepository.deleteById(alertID);
         return true;
     }
     public List<Alert> getAllAlerts() {
         List<Alert> alertList = alertRepository.findAll();
         return alertList;
     }
-    public Alert getAlertByID(Long alertID) {
-        Alert alert = alertRepository.getAlertById(alertID);
-        return alert;
+    public Optional<Alert> getAlertByID(Long alertID) {
+        return alertRepository.findById(alertID);
     }
 }
