@@ -18,6 +18,7 @@ public class Alert {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String title;
     private String lineName;
     private String status;
     private String reason;

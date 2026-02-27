@@ -17,7 +17,7 @@ public class AlertController {
     // For testing purpose, to be removed
     @Autowired
     private GtfsRealtimeService gtfsRealtimeService;
-    @GetMapping
+    @GetMapping("/fetch")
     public String fetchAlerts() {
         gtfsRealtimeService.fetchSydneyTrainAlerts();
         return "Fetch triggered";
