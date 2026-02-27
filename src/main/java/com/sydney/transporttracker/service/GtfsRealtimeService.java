@@ -28,8 +28,14 @@ public class GtfsRealtimeService {
             // Parsing
             byte[] data = response.getBody();
             GtfsRealtime.FeedMessage feed = GtfsRealtime.FeedMessage.parseFrom(data);
+            for (GtfsRealtime.FeedEntity e : feed.getEntityList()) {
+                if (e.hasAlert()) {
+                    GtfsRealtime.Alert gtfsAlert = e.getAlert();
+                    System.out.println(gtfsAlert);
+                }
+            }
         } catch (Exception e) {
-            System.out.println("Error fetching GTFS data" + e.getMessage());
+            System.out.println("Error fetching GTFS data: " + e.getMessage());
         }
     }
 }

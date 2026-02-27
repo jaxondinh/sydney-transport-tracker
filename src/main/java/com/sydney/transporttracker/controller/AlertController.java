@@ -2,6 +2,7 @@ package com.sydney.transporttracker.controller;
 
 import com.sydney.transporttracker.model.Alert;
 import com.sydney.transporttracker.service.AlertService;
+import com.sydney.transporttracker.service.GtfsRealtimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,14 @@ import java.util.Optional;
 public class AlertController {
     @Autowired
     private AlertService alertService;
+    // For testing purpose, to be removed
+    @Autowired
+    private GtfsRealtimeService gtfsRealtimeService;
+    @GetMapping
+    public String fetchAlerts() {
+        gtfsRealtimeService.fetchSydneyTrainAlerts();
+        return "Fetch triggered";
+    }
     @GetMapping
     public List<Alert> getAlerts() {
         return alertService.getAllAlerts();
