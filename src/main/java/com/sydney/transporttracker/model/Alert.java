@@ -15,6 +15,7 @@ public class Alert {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String gtfsAlertId;
     @Column(columnDefinition = "TEXT")
     private String title;
     private String lineName;
