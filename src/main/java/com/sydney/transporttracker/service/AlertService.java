@@ -29,4 +29,7 @@ public class AlertService {
     public Optional<Alert> getAlertByID(Long alertID) {
         return alertRepository.findById(alertID);
     }
+    public boolean existsByGtfsAlertId(String gtfsAlertId) {
+        return alertRepository.existsByGtfsAlertId(gtfsAlertId);
+    }
 }
