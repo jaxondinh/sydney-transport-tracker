@@ -20,8 +20,9 @@ public class GtfsRealtimeService {
     private final RestTemplate restTemplate = new RestTemplate();
     @Autowired
     private AlertService alertService;
-    @Scheduled
+    @Scheduled(fixedRate = 300000)
     public void fetchSydneyTrainAlerts() {
+        System.out.println("Scheduled fetch triggered at: " + LocalDateTime.now());
         try {
             // Create header
             HttpHeaders headers = new HttpHeaders();
