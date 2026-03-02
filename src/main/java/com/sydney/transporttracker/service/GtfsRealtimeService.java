@@ -1,18 +1,24 @@
 package com.sydney.transporttracker.service;
 
 import com.google.transit.realtime.GtfsRealtime;
+import com.sydney.transporttracker.model.Alert;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collections;
 
 @Service
 public class GtfsRealtimeService {
     @Value("${tfn.api.key}")
     private String apiKey;
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private AlertService alertService;
     public void fetchSydneyTrainAlerts() {
         try {
             // Create header
@@ -31,7 +37,15 @@ public class GtfsRealtimeService {
             for (GtfsRealtime.FeedEntity e : feed.getEntityList()) {
                 if (e.hasAlert()) {
                     GtfsRealtime.Alert gtfsAlert = e.getAlert();
-                    System.out.println(gtfsAlert);
+                    Alert alert = new Alert();
+                    alert.setTitle(gtfsAlert.getHeaderText().getTranslation(0).getText());
+                    alert.setReason(gtfsAlert.getDescriptionText().getTranslation(0).getText());
+                    alert.setStatus(gtfsAlert.getEffect().toString());
+                    alert.setLineName(gtfsAlert.getInformedEntity(0).getRouteId());
+                    alert.setAffectedStops(gtfsAlert.getInformedEntity(0).getRouteId());
+                    alert.setStartTime(LocalDateTime.ofEpochSecond(gtfsAlert.getActivePeriod(0).getStart(), 0, ZoneOffset.UTC));
+                    alert.setEndTime(LocalDateTime.ofEpochSecond(gtfsAlert.getActivePeriod(0).getEnd(), 0, ZoneOffset.UTC));
+                    alertService.createAlert(alert);
                 }
             }
         } catch (Exception e) {

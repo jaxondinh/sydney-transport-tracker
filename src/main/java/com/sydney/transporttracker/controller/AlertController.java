@@ -38,4 +38,9 @@ public class AlertController {
     public boolean deleteAlert(@PathVariable Long id) {
         return alertService.deleteAlert(id);
     }
+    @DeleteMapping("/all")
+    public boolean deleteAllAlerts() {
+        return alertService.deleteAllAlerts();
+    }
+
 }

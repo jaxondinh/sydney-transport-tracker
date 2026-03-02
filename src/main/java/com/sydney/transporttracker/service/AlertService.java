@@ -19,6 +19,10 @@ public class AlertService {
         alertRepository.deleteById(alertID);
         return true;
     }
+    public boolean deleteAllAlerts() {
+        alertRepository.deleteAll();
+        return true;
+    }
     public List<Alert> getAllAlerts() {
         return alertRepository.findAll();
     }
