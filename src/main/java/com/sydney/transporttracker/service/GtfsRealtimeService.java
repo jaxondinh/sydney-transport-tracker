@@ -5,6 +5,7 @@ import com.sydney.transporttracker.model.Alert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,6 +20,7 @@ public class GtfsRealtimeService {
     private final RestTemplate restTemplate = new RestTemplate();
     @Autowired
     private AlertService alertService;
+    @Scheduled
     public void fetchSydneyTrainAlerts() {
         try {
             // Create header
