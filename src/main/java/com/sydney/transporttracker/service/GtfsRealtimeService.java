@@ -44,7 +44,8 @@ public class GtfsRealtimeService {
                     alert.setLineName(gtfsAlert.getInformedEntity(0).getRouteId());
                     alert.setAffectedStops(gtfsAlert.getInformedEntity(0).getRouteId());
                     alert.setStartTime(LocalDateTime.ofEpochSecond(gtfsAlert.getActivePeriod(0).getStart(), 0, ZoneOffset.UTC));
-                    alert.setEndTime(LocalDateTime.ofEpochSecond(gtfsAlert.getActivePeriod(0).getEnd(), 0, ZoneOffset.UTC));
+                    long endTimestamp = gtfsAlert.getActivePeriod(0).getEnd();
+                    alert.setEndTime(endTimestamp == 0 ? null : LocalDateTime.ofEpochSecond(endTimestamp, 0, ZoneOffset.UTC));
                     alertService.createAlert(alert);
                 }
             }
