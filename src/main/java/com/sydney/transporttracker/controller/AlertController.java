@@ -27,7 +27,7 @@ public class AlertController {
         return alertService.getAllAlerts();
     }
     @GetMapping("{id}")
-    public Optional<Alert> getAlertByID(@PathVariable Long id) {
+    public Alert getAlertByID(@PathVariable Long id) {
         return alertService.getAlertByID(id);
     }
     @PostMapping
@@ -35,8 +35,8 @@ public class AlertController {
         return alertService.createAlert(alert);
     }
     @DeleteMapping("{id}")
-    public boolean deleteAlert(@PathVariable Long id) {
-        return alertService.deleteAlert(id);
+    public void deleteAlert(@PathVariable Long id) {
+        alertService.deleteAlert(id);
     }
     @DeleteMapping("/all")
     public boolean deleteAllAlerts() {

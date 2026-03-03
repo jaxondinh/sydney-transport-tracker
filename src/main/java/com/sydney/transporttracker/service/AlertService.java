@@ -1,5 +1,6 @@
 package com.sydney.transporttracker.service;
 
+import com.sydney.transporttracker.exception.AlertNotFoundException;
 import com.sydney.transporttracker.model.Alert;
 import com.sydney.transporttracker.repository.AlertRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,10 @@ public class AlertService {
     public Alert createAlert(Alert alert) {
         return alertRepository.save(alert);
     }
-    public boolean deleteAlert(Long alertID) {
+    public void deleteAlert(Long alertID) {
+        // will throw an exception if not found, ending execution
+        getAlertByID(alertID);
         alertRepository.deleteById(alertID);
-        return true;
     }
     public boolean deleteAllAlerts() {
         alertRepository.deleteAll();
@@ -26,8 +28,8 @@ public class AlertService {
     public List<Alert> getAllAlerts() {
         return alertRepository.findAll();
     }
-    public Optional<Alert> getAlertByID(Long alertID) {
-        return alertRepository.findById(alertID);
+    public Alert getAlertByID(Long alertID) {
+        return alertRepository.findById(alertID).orElseThrow(() -> new AlertNotFoundException(alertID));
     }
     public boolean existsByGtfsAlertId(String gtfsAlertId) {
         return alertRepository.existsByGtfsAlertId(gtfsAlertId);
