@@ -3,6 +3,7 @@ package com.sydney.transporttracker.controller;
 import com.sydney.transporttracker.model.Alert;
 import com.sydney.transporttracker.service.AlertService;
 import com.sydney.transporttracker.service.GtfsRealtimeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class AlertController {
         return alertService.getAlertByID(id);
     }
     @PostMapping
-    public Alert createAlert(@RequestBody Alert alert) {
+    public Alert createAlert(@Valid @RequestBody Alert alert) {
         return alertService.createAlert(alert);
     }
     @DeleteMapping("{id}")
