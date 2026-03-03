@@ -20,6 +20,7 @@ public class Alert {
     private Long id;
     @NotBlank(message = "gtfsAlertId is mandatory")
     private String gtfsAlertId;
+    @NotBlank(message = "title is mandatory")
     @Column(columnDefinition = "TEXT")
     private String title;
     @NotBlank(message = "lineName is mandatory")
