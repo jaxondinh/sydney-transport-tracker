@@ -3,6 +3,7 @@ package com.sydney.transporttracker.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,7 @@ public class Alert {
     private String status;
     @Column(columnDefinition = "TEXT")
     private String reason;
-    @NotEmpty(message = "startTime is mandatory")
+    @NotNull(message = "startTime is mandatory")
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     @Column(columnDefinition = "TEXT")
