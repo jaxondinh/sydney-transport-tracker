@@ -23,7 +23,7 @@ public class AlertServiceTest {
     private AlertService alertService;
     // Happy path for findById
     @Test
-    void findAlertById() {
+    void getAlertById_alertExists_returnsAlert() {
         // Arrange
         Alert alert = new Alert();
         alert.setTitle("Test Title");
@@ -42,7 +42,7 @@ public class AlertServiceTest {
     }
     // Unhappy path for findById
     @Test
-    void findAlertByIdFail() {
+    void getAlertById_alertNotFound_throwsAlertNotFoundException() {
         // Arrange
         when(alertRepository.findById(1L)).thenReturn(Optional.empty());
         // Act & Assert
@@ -50,4 +50,5 @@ public class AlertServiceTest {
          alertService.getAlertById(1L);
         });
     }
+    // Happy path for deleteById
 }
