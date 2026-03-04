@@ -51,4 +51,14 @@ public class AlertServiceTest {
         });
     }
     // Happy path for deleteById
+    @Test
+    void deleteAlert_alertExists() {
+
+    }
+    // Unhappy path for deleteById
+    @Test
+    void deleteAlert_alertNotFound_throwsAlertNotFoundException() {
+
+
+    }
 }
