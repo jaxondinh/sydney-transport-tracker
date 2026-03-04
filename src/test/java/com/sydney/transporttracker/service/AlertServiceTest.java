@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AlertServiceTest {
@@ -52,13 +52,31 @@ public class AlertServiceTest {
     }
     // Happy path for deleteById
     @Test
-    void deleteAlert_alertExists() {
-
+    void deleteAlert_alertExists_deleteSuccess() {
+        // Arrange
+        Alert alert = new Alert();
+        alert.setTitle("Test Title");
+        alert.setReason("Test Reason");
+        alert.setStatus("Test Status");
+        alert.setLineName("Test LineName");
+        alert.setAffectedStops("Test Affected Stops");
+        alert.setStartTime(null);
+        alert.setEndTime(null);
+        alert.setGtfsAlertId("Test GTFSAlertId");
+        when(alertRepository.findById(1L)).thenReturn(Optional.of(alert));
+        // Act
+        alertService.deleteAlert(1L);
+        // Assert
+        verify(alertRepository, times(1)).deleteById(1L);
     }
     // Unhappy path for deleteById
     @Test
     void deleteAlert_alertNotFound_throwsAlertNotFoundException() {
-
-
+        // Arrange
+        when(alertRepository.findById(1L)).thenReturn(Optional.empty());
+        // Act & Assert
+        assertThrows(AlertNotFoundException.class, ()-> {
+            alertService.deleteAlert(1L);
+        });
     }
 }
