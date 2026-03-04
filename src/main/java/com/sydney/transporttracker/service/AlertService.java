@@ -18,7 +18,7 @@ public class AlertService {
     }
     public void deleteAlert(Long alertID) {
         // will throw an exception if not found, ending execution
-        getAlertByID(alertID);
+        getAlertById(alertID);
         alertRepository.deleteById(alertID);
     }
     public boolean deleteAllAlerts() {
@@ -28,7 +28,7 @@ public class AlertService {
     public List<Alert> getAllAlerts() {
         return alertRepository.findAll();
     }
-    public Alert getAlertByID(Long alertID) {
+    public Alert getAlertById(Long alertID) {
         return alertRepository.findById(alertID).orElseThrow(() -> new AlertNotFoundException(alertID));
     }
     public boolean existsByGtfsAlertId(String gtfsAlertId) {

@@ -29,7 +29,7 @@ public class AlertController {
     }
     @GetMapping("{id}")
     public Alert getAlertByID(@PathVariable Long id) {
-        return alertService.getAlertByID(id);
+        return alertService.getAlertById(id);
     }
     @PostMapping
     public Alert createAlert(@Valid @RequestBody Alert alert) {
