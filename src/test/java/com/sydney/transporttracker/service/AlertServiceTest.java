@@ -11,8 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -81,11 +80,12 @@ public class AlertServiceTest {
     }
     // Happy path for existsByGtfsAlertId
     @Test
-    void existsByGtfsAlertId_alertFound_alertReturned() {
+    void existsByGtfsAlertId_alertFound_returnsTrue() {
+        // Arrange
         when(alertRepository.existsByGtfsAlertId("Test GTFSAlertId")).thenReturn(true);
         // Act
-        Boolean result = alertService.existsByGtfsAlertId("Test GTFSAlertId");
+        boolean result = alertService.existsByGtfsAlertId("Test GTFSAlertId");
         // Assert
-        assertEquals(true, result);
+        assertTrue(result);
     }
 }
