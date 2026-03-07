@@ -79,4 +79,13 @@ public class AlertServiceTest {
             alertService.deleteAlert(1L);
         });
     }
+    // Happy path for existsByGtfsAlertId
+    @Test
+    void existsByGtfsAlertId_alertFound_alertReturned() {
+        when(alertRepository.existsByGtfsAlertId("Test GTFSAlertId")).thenReturn(true);
+        // Act
+        Boolean result = alertService.existsByGtfsAlertId("Test GTFSAlertId");
+        // Assert
+        assertEquals(true, result);
+    }
 }
