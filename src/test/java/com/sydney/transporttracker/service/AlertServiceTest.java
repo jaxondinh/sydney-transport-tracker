@@ -22,10 +22,7 @@ public class AlertServiceTest {
     private AlertRepository alertRepository;
     @InjectMocks
     private AlertService alertService;
-    // Happy path for findById
-    @Test
-    void getAlertById_alertExists_returnsAlert() {
-        // Arrange
+    private Alert createTestAlert(String gtfsAlertId) {
         Alert alert = new Alert();
         alert.setTitle("Test Title");
         alert.setReason("Test Reason");
@@ -34,7 +31,14 @@ public class AlertServiceTest {
         alert.setAffectedStops("Test Affected Stops");
         alert.setStartTime(null);
         alert.setEndTime(null);
-        alert.setGtfsAlertId("Test GTFSAlertId");
+        alert.setGtfsAlertId(gtfsAlertId);
+        return alert;
+    }
+    // Happy path for findById
+    @Test
+    void getAlertById_alertExists_returnsAlert() {
+        // Arrange
+        Alert alert = createTestAlert("Test");
         when(alertRepository.findById(1L)).thenReturn(Optional.of(alert));
         // Act
         Alert result = alertService.getAlertById(1L);
@@ -55,15 +59,7 @@ public class AlertServiceTest {
     @Test
     void deleteAlert_alertExists_deleteSuccess() {
         // Arrange
-        Alert alert = new Alert();
-        alert.setTitle("Test Title");
-        alert.setReason("Test Reason");
-        alert.setStatus("Test Status");
-        alert.setLineName("Test LineName");
-        alert.setAffectedStops("Test Affected Stops");
-        alert.setStartTime(null);
-        alert.setEndTime(null);
-        alert.setGtfsAlertId("Test GTFSAlertId");
+        Alert alert = createTestAlert("Test");
         when(alertRepository.findById(1L)).thenReturn(Optional.of(alert));
         // Act
         alertService.deleteAlert(1L);
@@ -104,15 +100,7 @@ public class AlertServiceTest {
     @Test
     void createAlert_validAlert_returnsSavedAlert() {
         // Arrange
-        Alert alert = new Alert();
-        alert.setTitle("Test Title");
-        alert.setReason("Test Reason");
-        alert.setStatus("Test Status");
-        alert.setLineName("Test LineName");
-        alert.setAffectedStops("Test Affected Stops");
-        alert.setStartTime(null);
-        alert.setEndTime(null);
-        alert.setGtfsAlertId("Test GTFSAlertId");
+        Alert alert = createTestAlert("Test");
         when(alertRepository.save(alert)).thenReturn(alert);
         // Act
         Alert result = alertService.createAlert(alert);
@@ -123,24 +111,8 @@ public class AlertServiceTest {
     @Test
     void getAllAlerts_returnsListOfAlerts() {
         // Arrange
-        Alert alert1 = new Alert();
-        alert1.setTitle("Test Title");
-        alert1.setReason("Test Reason");
-        alert1.setStatus("Test Status");
-        alert1.setLineName("Test LineName");
-        alert1.setAffectedStops("Test Affected Stops");
-        alert1.setStartTime(null);
-        alert1.setEndTime(null);
-        alert1.setGtfsAlertId("Test GTFSAlertId");
-        Alert alert2 = new Alert();
-        alert2.setTitle("Test Title2");
-        alert2.setReason("Test Reason2");
-        alert2.setStatus("Test Status2");
-        alert2.setLineName("Test LineName2");
-        alert2.setAffectedStops("Test Affected Stops2");
-        alert2.setStartTime(null);
-        alert2.setEndTime(null);
-        alert2.setGtfsAlertId("Test GTFSAlertId2");
+        Alert alert1 = createTestAlert("Test");
+        Alert alert2 = createTestAlert("Test2");
         when(alertRepository.findAll()).thenReturn(Arrays.asList(alert1, alert2));
         // Act
         List<Alert> result = alertService.getAllAlerts();
