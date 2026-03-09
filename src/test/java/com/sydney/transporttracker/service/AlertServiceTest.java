@@ -88,13 +88,33 @@ public class AlertServiceTest {
         // Assert
         assertTrue(result);
     }
+    // Unhappy path for existsByGtfsAlertId
     @Test
-    void existsByGtfsAlertId_alertFound_returnsFalse() {
+    void existsByGtfsAlertId_alertNotFound_returnsFalse() {
         // Arrange
         when(alertRepository.existsByGtfsAlertId("Invalid-GTFSAlertId")).thenReturn(false);
         // Act
         boolean result = alertService.existsByGtfsAlertId("Invalid-GTFSAlertId");
         // Assert
         assertFalse(result);
+    }
+    // Happy path for createAlert
+    @Test
+    void createAlert_validAlert_returnsSavedAlert() {
+        // Arrange
+        Alert alert = new Alert();
+        alert.setTitle("Test Title");
+        alert.setReason("Test Reason");
+        alert.setStatus("Test Status");
+        alert.setLineName("Test LineName");
+        alert.setAffectedStops("Test Affected Stops");
+        alert.setStartTime(null);
+        alert.setEndTime(null);
+        alert.setGtfsAlertId("Test GTFSAlertId");
+        when(alertRepository.save(alert)).thenReturn(alert);
+        // Act
+        Alert result = alertService.createAlert(alert);
+        // Assert
+        assertEquals(alert, result);
     }
 }
