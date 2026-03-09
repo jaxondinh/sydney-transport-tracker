@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -116,5 +118,38 @@ public class AlertServiceTest {
         Alert result = alertService.createAlert(alert);
         // Assert
         assertEquals(alert, result);
+    }
+    // Happy path for getAllAlerts
+    @Test
+    void getAllAlerts_returnsListOfAlerts() {
+        // Arrange
+        Alert alert1 = new Alert();
+        alert1.setTitle("Test Title");
+        alert1.setReason("Test Reason");
+        alert1.setStatus("Test Status");
+        alert1.setLineName("Test LineName");
+        alert1.setAffectedStops("Test Affected Stops");
+        alert1.setStartTime(null);
+        alert1.setEndTime(null);
+        alert1.setGtfsAlertId("Test GTFSAlertId");
+        Alert alert2 = new Alert();
+        alert2.setTitle("Test Title2");
+        alert2.setReason("Test Reason2");
+        alert2.setStatus("Test Status2");
+        alert2.setLineName("Test LineName2");
+        alert2.setAffectedStops("Test Affected Stops2");
+        alert2.setStartTime(null);
+        alert2.setEndTime(null);
+        alert2.setGtfsAlertId("Test GTFSAlertId2");
+        when(alertRepository.findAll()).thenReturn(Arrays.asList(alert1, alert2));
+        // Act
+        List<Alert> result = alertService.getAllAlerts();
+        // Assert
+        assertEquals(Arrays.asList(alert1, alert2), result);
+    }
+    // Happy path for deleteAllAlerts
+    @Test
+    void deleteAllAlerts_deleteSuccessfully() {
+
     }
 }
