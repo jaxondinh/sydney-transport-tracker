@@ -122,6 +122,10 @@ public class AlertServiceTest {
     // Happy path for deleteAllAlerts
     @Test
     void deleteAllAlerts_deleteSuccessfully() {
-
+        // Act
+        boolean result = alertService.deleteAllAlerts();
+        // Assert
+        verify(alertRepository, times(1)).deleteAll();
+        assertTrue(result);
     }
 }
