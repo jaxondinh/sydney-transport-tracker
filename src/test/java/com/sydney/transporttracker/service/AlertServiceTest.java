@@ -88,4 +88,13 @@ public class AlertServiceTest {
         // Assert
         assertTrue(result);
     }
+    @Test
+    void existsByGtfsAlertId_alertFound_returnsFalse() {
+        // Arrange
+        when(alertRepository.existsByGtfsAlertId("Invalid-GTFSAlertId")).thenReturn(false);
+        // Act
+        boolean result = alertService.existsByGtfsAlertId("Invalid-GTFSAlertId");
+        // Assert
+        assertFalse(result);
+    }
 }
