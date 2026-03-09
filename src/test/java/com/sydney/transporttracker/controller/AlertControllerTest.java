@@ -1,5 +1,6 @@
 package com.sydney.transporttracker.controller;
 
+import com.sydney.transporttracker.exception.AlertNotFoundException;
 import com.sydney.transporttracker.model.Alert;
 import com.sydney.transporttracker.service.AlertService;
 import com.sydney.transporttracker.service.GtfsRealtimeService;
@@ -38,7 +39,7 @@ public class AlertControllerTest {
         alert.setGtfsAlertId(gtfsAlertId);
         return alert;
     }
-    // Testing GET request on /alerts
+    // Happy path for GET request on /alerts
     @Test
     void getAlerts_successful() throws Exception {
         // Arrange
@@ -52,6 +53,7 @@ public class AlertControllerTest {
                 .andExpect(jsonPath("$[0].gtfsAlertId").value("test1"))
                 .andExpect(jsonPath("$[1].gtfsAlertId").value("test2"));
     }
+    // Happy path for GET request on /alerts/{id}
     @Test
     void getAlertsById_successful() throws Exception {
         // Arrange
@@ -62,5 +64,13 @@ public class AlertControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Test Title"))
                 .andExpect(jsonPath("$.gtfsAlertId").value("test1"));
+    }
+    // Unhappy path for GET request on /alerts/{id}
+    @Test
+    void getAlertsById_unsuccessful() throws Exception {
+        // Arrange
+        when(alertService.getAlertById(1L)).thenThrow(new AlertNotFoundException(1L));
+        // Act & Assert
+
     }
 }
