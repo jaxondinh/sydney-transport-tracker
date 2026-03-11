@@ -5,6 +5,7 @@ import com.sydney.transporttracker.service.AlertService;
 import com.sydney.transporttracker.service.GtfsRealtimeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,12 +37,14 @@ public class AlertController {
         return alertService.createAlert(alert);
     }
     @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAlert(@PathVariable Long id) {
         alertService.deleteAlert(id);
     }
     @DeleteMapping("/all")
-    public boolean deleteAllAlerts() {
-        return alertService.deleteAllAlerts();
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAllAlerts() {
+        alertService.deleteAllAlerts();
     }
 
 }

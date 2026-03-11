@@ -123,9 +123,8 @@ public class AlertServiceTest {
     @Test
     void deleteAllAlerts_deleteSuccessfully() {
         // Act
-        boolean result = alertService.deleteAllAlerts();
+        alertService.deleteAllAlerts();
         // Assert
         verify(alertRepository, times(1)).deleteAll();
-        assertTrue(result);
     }
 }

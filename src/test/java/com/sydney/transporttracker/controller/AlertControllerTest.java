@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static org.mockito.Mockito.doThrow;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -71,6 +74,30 @@ public class AlertControllerTest {
         // Arrange
         when(alertService.getAlertById(1L)).thenThrow(new AlertNotFoundException(1L));
         // Act & Assert
-
+        mockMvc.perform(get("/alerts/1"))
+                .andExpect(status().isNotFound());
+    }
+    // Happy path for DELETE request on /alerts/{id}
+    @Test
+    void deleteAlertById_successful() throws Exception {
+        // Act & Assert
+        mockMvc.perform(delete("/alerts/1"))
+                .andExpect(status().isNoContent());
+    }
+    // Unhappy path for DELETE request on /alerts/{id}
+    @Test
+    void deleteAlertById_unsuccessful() throws Exception {
+        // Arrange
+        doThrow(new AlertNotFoundException(1L)).when(alertService).deleteAlert(1L);
+        // Act & Assert
+        mockMvc.perform(delete("/alerts/1"))
+                .andExpect(status().isNotFound());
+    }
+    // Happy path for DELETE request on /alerts/all
+    @Test
+    void deleteAllAlerts_successful() throws Exception {
+        // Act & Assert
+        mockMvc.perform(delete("/alerts/all"))
+                .andExpect(status().isNoContent());
     }
 }
