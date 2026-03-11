@@ -9,20 +9,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import tools.jackson.databind.ObjectMapper;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import org.springframework.http.MediaType;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @WebMvcTest(AlertController.class)
 public class AlertControllerTest {
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @MockitoBean
     private AlertService alertService;
@@ -37,7 +44,7 @@ public class AlertControllerTest {
         alert.setStatus("Test Status");
         alert.setLineName("Test LineName");
         alert.setAffectedStops("Test Affected Stops");
-        alert.setStartTime(null);
+        alert.setStartTime(LocalDateTime.now());
         alert.setEndTime(null);
         alert.setGtfsAlertId(gtfsAlertId);
         return alert;
@@ -99,5 +106,30 @@ public class AlertControllerTest {
         // Act & Assert
         mockMvc.perform(delete("/alerts/all"))
                 .andExpect(status().isNoContent());
+    }
+    // Happy path for POST request on /alerts
+    @Test
+    void createAlert_successful() throws Exception {
+        // Arrange
+        Alert alert = createTestAlert("Test");
+        when(alertService.createAlert(any(Alert.class))).thenReturn(alert);
+        // Act & Assert
+        mockMvc.perform(post("/alerts")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(alert)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Test Title"));
+    }
+    // Unhappy path for POST request on /alerts
+    @Test
+    void createAlert_unsuccessful() throws Exception {
+        // Arrange
+        Alert alert = createTestAlert("Test");
+        alert.setStartTime(null);
+        // Act & Assert
+        mockMvc.perform(post("/alerts")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(alert)))
+                .andExpect(status().isBadRequest());
     }
 }

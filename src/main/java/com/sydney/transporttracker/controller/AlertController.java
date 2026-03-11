@@ -28,19 +28,23 @@ public class AlertController {
     public List<Alert> getAlerts() {
         return alertService.getAllAlerts();
     }
+
     @GetMapping("{id}")
     public Alert getAlertByID(@PathVariable Long id) {
         return alertService.getAlertById(id);
     }
+
     @PostMapping
     public Alert createAlert(@Valid @RequestBody Alert alert) {
         return alertService.createAlert(alert);
     }
+
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAlert(@PathVariable Long id) {
         alertService.deleteAlert(id);
     }
+
     @DeleteMapping("/all")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAllAlerts() {
