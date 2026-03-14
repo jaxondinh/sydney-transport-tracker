@@ -16,15 +16,7 @@ import java.util.Optional;
 public class AlertController {
     @Autowired
     private AlertService alertService;
-    // For testing purpose, to be removed
-    @Autowired
-    private GtfsRealtimeService gtfsRealtimeService;
 
-    @GetMapping("/fetch")
-    public String fetchAlerts() {
-        gtfsRealtimeService.fetchSydneyTrainAlerts();
-        return "Fetch triggered";
-    }
     @GetMapping
     public List<Alert> getAlerts() {
         return alertService.getAllAlerts();
