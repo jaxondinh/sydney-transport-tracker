@@ -34,9 +34,6 @@ public class AlertControllerTest {
     @MockitoBean
     private AlertService alertService;
 
-    @MockitoBean
-    private GtfsRealtimeService gtfsRealtimeService;
-
     private Alert createTestAlert(String gtfsAlertId) {
         Alert alert = new Alert();
         alert.setTitle("Test Title");
