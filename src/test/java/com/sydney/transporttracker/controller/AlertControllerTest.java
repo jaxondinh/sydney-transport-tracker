@@ -4,9 +4,14 @@ import com.sydney.transporttracker.exception.AlertNotFoundException;
 import com.sydney.transporttracker.model.Alert;
 import com.sydney.transporttracker.service.AlertService;
 import com.sydney.transporttracker.service.GtfsRealtimeService;
+import com.sydney.transporttracker.service.security.JwtAuthFilter;
+import org.hibernate.boot.jaxb.internal.stax.BufferedXMLEventReader;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.ObjectMapper;
@@ -23,7 +28,13 @@ import org.springframework.http.MediaType;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
-@WebMvcTest(AlertController.class)
+@WebMvcTest(value = AlertController.class,
+        excludeAutoConfiguration = SecurityAutoConfiguration.class,
+        excludeFilters = @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = JwtAuthFilter.class
+        )
+)
 public class AlertControllerTest {
     @Autowired
     private MockMvc mockMvc;
