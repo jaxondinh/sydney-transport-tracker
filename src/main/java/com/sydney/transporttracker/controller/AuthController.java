@@ -1,6 +1,8 @@
 package com.sydney.transporttracker.controller;
 
 import com.sydney.transporttracker.dto.LoginRequest;
+import com.sydney.transporttracker.dto.RegisterRequest;
+import com.sydney.transporttracker.model.User;
 import com.sydney.transporttracker.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,5 +19,9 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@Valid @RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
+    }
+    @PostMapping("/register")
+    public User register(@Valid @RequestBody RegisterRequest registerRequest) {
+        return authService.register(registerRequest);
     }
 }
