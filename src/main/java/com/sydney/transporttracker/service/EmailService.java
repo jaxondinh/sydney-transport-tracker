@@ -19,6 +19,8 @@ public class EmailService {
             email.setSubject(subject);
             email.setText(body);
             javaMailSender.send(email);
+            // For logging purpose, to be removed later
+            System.out.println("Email successfully sent to:" + recipient);
         } catch (MailException e) {
             System.out.println("Failed to send email : " + e.getMessage());
         }
