@@ -2,6 +2,8 @@ package com.sydney.transporttracker.service;
 
 import com.google.transit.realtime.GtfsRealtime;
 import com.sydney.transporttracker.model.Alert;
+import com.sydney.transporttracker.model.User;
+import com.sydney.transporttracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -12,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class GtfsRealtimeService {
@@ -20,6 +23,10 @@ public class GtfsRealtimeService {
     private final RestTemplate restTemplate = new RestTemplate();
     @Autowired
     private AlertService alertService;
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    UserRepository userRepository;
     @Scheduled(fixedRate = 300000)
     public void fetchSydneyTrainAlerts() {
         System.out.println("Scheduled fetch triggered at: " + LocalDateTime.now());
@@ -52,6 +59,15 @@ public class GtfsRealtimeService {
                     alert.setGtfsAlertId(e.getId());
                     if (!alertService.existsByGtfsAlertId(alert.getGtfsAlertId())) {
                         alertService.createAlert(alert);
+                        List<User> users = userRepository.findByNotificationsEnabled(true);
+                        String body = "New Sydney Train Alert\n\n" +
+                                "Line: " + alert.getLineName() + "\n" +
+                                "Status: " + alert.getStatus() + "\n" +
+                                "Start time:" + alert.getStartTime() + "\n\n" +
+                                "Details: " + alert.getReason();
+                        for (User user : users) {
+                            emailService.sendEmail(user.getEmail(), alert.getTitle(), body);
+                        }
                     }
                 }
             }
