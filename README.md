@@ -48,7 +48,7 @@ API features JWT authentication, a full testing suite and is containerised with 
 | GET | /alerts |![No](https://img.shields.io/badge/No-red) | Retrieve all alerts                 |
 | GET | /alerts/{id} |![No](https://img.shields.io/badge/No-red) | Retrieve a single alert based on ID |
 | POST | /alerts |![Yes](https://img.shields.io/badge/Yes-green) | Create a new alert                  |
-| DELETE | /alerts/{id} |![Yes](https://img.shields.io/badge/Yes-green) | Delete an alert based on ID         |
+| DELETE | /alerts/{id} |![Yes](https://img.shields.io/badge/Yes-green) | Delete a single alert based on ID   |
 | DELETE | /alerts/all |![Yes](https://img.shields.io/badge/Yes-green) | Delete all alerts                   |
 
 ### Auth
