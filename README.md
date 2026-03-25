@@ -62,3 +62,6 @@ API features JWT authentication, a full testing suite and is containerised with 
 - **Role-Based Access Control** — Implement admin roles to restrict alert management endpoints such as create and delete to authorised users only
 - **Dynamic Line Name Mapping** — Replace hardcoded route ID mapping with dynamic fetching from the Transport for NSW static GTFS feed to keep line names accurate and up to date
 - **Manual Refresh Endpoint** — Allow authenticated users to trigger an on-demand alert fetch within a rate limited window rather than waiting for the next scheduled poll
+
+## License
+Distributed under the MIT License. See `LICENSE` for more information.
