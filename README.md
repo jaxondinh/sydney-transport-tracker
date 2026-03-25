@@ -1,4 +1,8 @@
-# Sydney Train Disruption Alerts
+<div align="center">
+  <h1>🚆 Sydney Train Disruption Alerts 🚆</h1>
+  <p>Real-time train disruption alerts for Sydney commuters</p>
+</div>
+
 ## About
 Sydney Train Disruption Alerts is a real-time REST API that monitors 
 and alerts users to disruptions across the Sydney train network. 
@@ -38,5 +42,17 @@ API features JWT authentication, a full testing suite and is containerised with 
 4. The API will be available at `http://localhost:8080`
 
 ## API Endpoints
+### Alerts
+| Method | Endpoint | Auth Required | Description |
+|--------|----------|---------------|-------------|
+| GET | /alerts | | |
+| GET | /alerts/{id} | | |
+| POST | /alerts | | |
+| DELETE | /alerts/{id} | | |
+| DELETE | /alerts/all | | |
 
----
+### Auth
+| Method | Endpoint | Auth Required | Description |
+|--------|----------|---------------|-------------|
+| POST | /auth/login | | |
+| POST | /auth/register | | |
