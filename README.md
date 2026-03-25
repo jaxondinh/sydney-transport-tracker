@@ -43,16 +43,16 @@ API features JWT authentication, a full testing suite and is containerised with 
 
 ## API Endpoints
 ### Alerts
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|---------------|-------------|
-| GET | /alerts | | |
-| GET | /alerts/{id} | | |
-| POST | /alerts | | |
-| DELETE | /alerts/{id} | | |
-| DELETE | /alerts/all | | |
+| Method | Endpoint | Auth Required | Description                         |
+|--------|----------|---------------|-------------------------------------|
+| GET | /alerts |![No](https://img.shields.io/badge/No-red) | Retrieve all alerts                 |
+| GET | /alerts/{id} |![No](https://img.shields.io/badge/No-red) | Retrieve a single alert based on ID |
+| POST | /alerts |![Yes](https://img.shields.io/badge/Yes-green) | Create a new alert                  |
+| DELETE | /alerts/{id} |![Yes](https://img.shields.io/badge/Yes-green) | Delete an alert based on ID         |
+| DELETE | /alerts/all |![Yes](https://img.shields.io/badge/Yes-green) | Delete all alerts                   |
 
 ### Auth
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|---------------|-------------|
-| POST | /auth/login | | |
-| POST | /auth/register | | |
+| Method | Endpoint | Auth Required | Description     |
+|--------|----------|---------------|-----------------|
+| POST | /auth/login |![No](https://img.shields.io/badge/No-red) | Login a user    |
+| POST | /auth/register |![No](https://img.shields.io/badge/No-red) | Register a user |
