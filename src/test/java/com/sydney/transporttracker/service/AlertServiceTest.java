@@ -8,6 +8,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -109,15 +112,15 @@ public class AlertServiceTest {
     }
     // Happy path for getAllAlerts
     @Test
-    void getAllAlerts_returnsListOfAlerts() {
+    void getAllAlerts_returnsPageOfAlerts() {
         // Arrange
         Alert alert1 = createTestAlert("Test");
         Alert alert2 = createTestAlert("Test2");
-        when(alertRepository.findAll()).thenReturn(Arrays.asList(alert1, alert2));
+        when(alertRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(Arrays.asList(alert1, alert2)));
         // Act
-        List<Alert> result = alertService.getAllAlerts();
+        Page<Alert> result = alertService.getAllAlerts(0, 10);
         // Assert
-        assertEquals(Arrays.asList(alert1, alert2), result);
+        assertEquals(Arrays.asList(alert1, alert2), result.getContent());
     }
     // Happy path for deleteAllAlerts
     @Test

@@ -12,6 +12,7 @@ import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.ObjectMapper;
@@ -63,13 +64,13 @@ public class AlertControllerTest {
         // Arrange
         Alert alert1 = createTestAlert("test1");
         Alert alert2 = createTestAlert("test2");
-        when(alertService.getAllAlerts()).thenReturn(Arrays.asList(alert1, alert2));
+        when(alertService.getAllAlerts(0, 10)).thenReturn(new PageImpl<>(Arrays.asList(alert1, alert2)));
         // Act & Assert
         mockMvc.perform(get("/alerts"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].gtfsAlertId").value("test1"))
-                .andExpect(jsonPath("$[1].gtfsAlertId").value("test2"));
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content[0].gtfsAlertId").value("test1"))
+                .andExpect(jsonPath("$.content[1].gtfsAlertId").value("test2"));
     }
     // Happy path for GET request on /alerts/{id}
     @Test
