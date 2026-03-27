@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,8 +19,8 @@ public class AlertController {
     private AlertService alertService;
 
     @GetMapping
-    public List<Alert> getAlerts() {
-        return alertService.getAllAlerts();
+    public Page<Alert> getAlerts(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
+        return alertService.getAllAlerts(page, size);
     }
 
     @GetMapping("{id}")

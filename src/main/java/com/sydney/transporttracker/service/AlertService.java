@@ -3,9 +3,11 @@ package com.sydney.transporttracker.service;
 import com.sydney.transporttracker.exception.AlertNotFoundException;
 import com.sydney.transporttracker.model.Alert;
 import com.sydney.transporttracker.repository.AlertRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +26,9 @@ public class AlertService {
     public void deleteAllAlerts() {
         alertRepository.deleteAll();
     }
-    public List<Alert> getAllAlerts() {
-        return alertRepository.findAll();
+    public Page<Alert> getAllAlerts(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return alertRepository.findAll(pageable);
     }
     public Alert getAlertById(Long alertID) {
         return alertRepository.findById(alertID).orElseThrow(() -> new AlertNotFoundException(alertID));
