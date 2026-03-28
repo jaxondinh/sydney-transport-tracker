@@ -2,15 +2,11 @@ package com.sydney.transporttracker.controller;
 
 import com.sydney.transporttracker.model.Alert;
 import com.sydney.transporttracker.service.AlertService;
-import com.sydney.transporttracker.service.GtfsRealtimeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/alerts")
