@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @Autowired
     UserService userService;
+
     @GetMapping("/me")
     public UserProfileResponse myProfile(@AuthenticationPrincipal UserDetails userDetails) {
         return userService.getUserProfile(userDetails.getUsername());
